@@ -32,13 +32,14 @@ namespace ServoApp
         int count, i, countTime = 0;
         double x, y1, y2, y3, global, time = 0;
         long timeStart, timeContinue = 0;
+        string serialPortName;
         public Form1()
         {
             InitializeComponent();
-            serialPort = new SerialPort();
-            serialPort.PortName = "COM4";
-            serialPort.BaudRate = 115200;
-            serialPort.Open();
+            //serialPort = new SerialPort();
+            //serialPort.PortName = "COM4";
+            //serialPort.BaudRate = 115200;
+            //serialPort.Open();
             timer.Enabled = true;
             timer.Interval = 1;
             zedGraph = this.zedGraphControl1;
@@ -146,12 +147,48 @@ namespace ServoApp
             zedGraph.Refresh();
             serialPort.DiscardInBuffer();
             serialPort.DiscardOutBuffer();
-            this.label7.Text = "all time = " + Math.Round(x, 2)+" s";
+            this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
             this.label8.Text = "count = " + countTime;
             timeContinue = DateTime.Now.Ticks;
             timeSpan = new TimeSpan(timeContinue - timeStart);
             timeStart = timeContinue;
             time = timeSpan.Milliseconds / 1000d;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox itemCombobox = sender as ComboBox;
+            serialPortName = itemCombobox.Text;
+        }
+
+        private void LoadForm1(object sender, EventArgs e)
+        {
+            serialPort = new SerialPort();
+            List<string> portName = new List<string>();
+            for (int i = 0; i < 20; i++)
+            {
+                portName.Add("COM" + i);
+            }
+            foreach (string item in portName)
+            {
+                try
+                {
+                    serialPort.PortName = item;
+                    serialPort.BaudRate = 115200;
+                    serialPort.Open();
+                }
+                catch { }
+                if (serialPort.IsOpen)
+                {
+                    serialPort.Close();
+                    comboBox1.Items.Add(item);
+                }
+            }
+        }
+
+        private void ActiveElementComboBox(object sender, EventArgs e)
+        {
+
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -323,7 +360,7 @@ namespace ServoApp
             pane.Legend.Border.Color = Color.FromArgb(48, 47, 47);
             pane.Legend.FontSpec.FontColor = Color.LightGray;
 
-            
+
         }
 
 
