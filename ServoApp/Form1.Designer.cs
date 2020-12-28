@@ -58,6 +58,7 @@ namespace ServoApp
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox2)).BeginInit();
@@ -85,7 +86,7 @@ namespace ServoApp
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Silver;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(583, 763);
+            this.label3.Location = new System.Drawing.Point(639, 763);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 24);
             this.label3.TabIndex = 5;
@@ -96,7 +97,7 @@ namespace ServoApp
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Silver;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(583, 796);
+            this.label4.Location = new System.Drawing.Point(639, 796);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(72, 24);
             this.label4.TabIndex = 7;
@@ -107,7 +108,7 @@ namespace ServoApp
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Silver;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(817, 796);
+            this.label5.Location = new System.Drawing.Point(853, 796);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 24);
             this.label5.TabIndex = 11;
@@ -118,7 +119,7 @@ namespace ServoApp
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Silver;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(817, 762);
+            this.label6.Location = new System.Drawing.Point(853, 762);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(86, 24);
             this.label6.TabIndex = 9;
@@ -127,7 +128,7 @@ namespace ServoApp
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(127, 849);
+            this.button1.Location = new System.Drawing.Point(169, 849);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(101, 31);
             this.button1.TabIndex = 12;
@@ -155,7 +156,7 @@ namespace ServoApp
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(232, 849);
+            this.button2.Location = new System.Drawing.Point(274, 849);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(101, 31);
             this.button2.TabIndex = 15;
@@ -166,7 +167,7 @@ namespace ServoApp
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(337, 849);
+            this.button3.Location = new System.Drawing.Point(379, 849);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(101, 31);
             this.button3.TabIndex = 16;
@@ -179,7 +180,7 @@ namespace ServoApp
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Silver;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(584, 863);
+            this.label7.Location = new System.Drawing.Point(640, 863);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(96, 20);
             this.label7.TabIndex = 17;
@@ -190,7 +191,7 @@ namespace ServoApp
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Silver;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(584, 835);
+            this.label8.Location = new System.Drawing.Point(640, 835);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(75, 20);
             this.label8.TabIndex = 18;
@@ -201,7 +202,7 @@ namespace ServoApp
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Silver;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(817, 833);
+            this.label9.Location = new System.Drawing.Point(853, 833);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(76, 24);
             this.label9.TabIndex = 20;
@@ -255,7 +256,7 @@ namespace ServoApp
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Silver;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(1015, 762);
+            this.label1.Location = new System.Drawing.Point(1051, 762);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 24);
             this.label1.TabIndex = 22;
@@ -266,7 +267,7 @@ namespace ServoApp
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.Silver;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(1015, 797);
+            this.label10.Location = new System.Drawing.Point(1051, 797);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 24);
             this.label10.TabIndex = 23;
@@ -274,7 +275,7 @@ namespace ServoApp
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(666, 766);
+            this.textBox1.Location = new System.Drawing.Point(722, 766);
             this.textBox1.Maximum = new decimal(new int[] {
             180,
             0,
@@ -286,7 +287,7 @@ namespace ServoApp
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(666, 799);
+            this.textBox2.Location = new System.Drawing.Point(722, 799);
             this.textBox2.Maximum = new decimal(new int[] {
             180,
             0,
@@ -303,7 +304,7 @@ namespace ServoApp
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(911, 766);
+            this.textBox4.Location = new System.Drawing.Point(947, 766);
             this.textBox4.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -325,7 +326,7 @@ namespace ServoApp
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(911, 799);
+            this.textBox3.Location = new System.Drawing.Point(947, 799);
             this.textBox3.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -347,7 +348,7 @@ namespace ServoApp
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(911, 837);
+            this.textBox5.Location = new System.Drawing.Point(947, 837);
             this.textBox5.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -365,7 +366,7 @@ namespace ServoApp
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(442, 849);
+            this.button4.Location = new System.Drawing.Point(484, 849);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(101, 31);
             this.button4.TabIndex = 29;
@@ -421,10 +422,11 @@ namespace ServoApp
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.Location = new System.Drawing.Point(22, 849);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(101, 31);
+            this.button5.Size = new System.Drawing.Size(141, 31);
             this.button5.TabIndex = 30;
             this.button5.Text = "Connect";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // checkedListBox1
             // 
@@ -436,8 +438,18 @@ namespace ServoApp
             "curve4"});
             this.checkedListBox1.Location = new System.Drawing.Point(189, 764);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(354, 64);
+            this.checkedListBox1.Size = new System.Drawing.Size(396, 64);
             this.checkedListBox1.TabIndex = 36;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Silver;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label13.Location = new System.Drawing.Point(981, 873);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(0, 20);
+            this.label13.TabIndex = 37;
             // 
             // Form1
             // 
@@ -445,6 +457,7 @@ namespace ServoApp
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(1112, 903);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
@@ -473,7 +486,7 @@ namespace ServoApp
             this.Controls.Add(this.zedGraphControl1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Choper by SergKredo";
             this.Load += new System.EventHandler(this.LoadForm1);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).EndInit();
@@ -515,6 +528,7 @@ namespace ServoApp
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Label label13;
     }
 }
 

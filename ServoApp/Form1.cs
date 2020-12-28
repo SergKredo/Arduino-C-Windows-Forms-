@@ -21,6 +21,7 @@ namespace ServoApp
         TimeSpan timeSpan;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool triger, trigerButton2, trigerStartApp = true;
+        bool connectTriger = true;
         static GraphPane myPane;
         ZedGraphControl zedGraph;
         RollingPointPairList _data;
@@ -51,6 +52,9 @@ namespace ServoApp
             CreateGraph(zedGraph);
             this.button2.Enabled = false;
             this.button3.Enabled = false;
+            this.button1.Enabled = false;
+            this.button4.Enabled = false;
+            this.trackBar1.Enabled = false;
             SetColors(myPane);
         }
 
@@ -174,7 +178,6 @@ namespace ServoApp
                 try
                 {
                     serialPort.PortName = item;
-                    serialPort.BaudRate = 115200;
                     serialPort.Open();
                 }
                 catch { }
@@ -182,6 +185,11 @@ namespace ServoApp
                 {
                     serialPort.Close();
                     comboBox1.Items.Add(item);
+                    comboBox2.Items.Add(9600);
+                    comboBox2.Items.Add(115200);
+                    comboBox2.DropDownStyle = ComboBoxStyle.Simple;
+                    this.comboBox1.SelectedItem = item;
+                    this.comboBox2.SelectedItem = comboBox2.Items[1];
                 }
             }
         }
@@ -189,6 +197,59 @@ namespace ServoApp
         private void ActiveElementComboBox(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (connectTriger)
+                {
+                    serialPort.PortName = serialPortName;
+                    serialPort.BaudRate = Convert.ToInt32(comboBox2.Text);
+                    serialPort.Open();
+                    this.button5.Text = "Disconnect";
+                    this.label13.Text = "Connected!";
+                    connectTriger = false;
+                    this.button1.Enabled = true;
+                    this.trackBar1.Enabled = true;
+                }
+                else
+                {
+                    serialPort.Close();
+                    this.button5.Text = "Connect";
+                    this.button1.Enabled = false;
+                    this.button2.Enabled = false;
+                    this.button3.Enabled = false;
+                    this.trackBar1.Enabled = false;
+                    timer.Stop();
+                    trigerButton2 = false;
+                    myPane.CurveList.Clear();
+                    lists = new PointPairList[3] { new PointPairList(), new PointPairList(), new PointPairList() };
+                    myCurves = new LineItem[3];
+                    dataCurves = new string[4] { null, null, null, null };
+                    dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00" };
+                    count = 0; i = 0;
+                    x = 0; y1 = 0; y2 = 0; y3 = 0; global = 0;
+                    time = 0;
+
+                    zedGraph.GraphPane.YAxis.Scale.Min = 0;
+                    myPane.XAxis.Scale.Min = 0;
+                    myPane.XAxis.Scale.Max = 1.2;
+                    zedGraph.AxisChange();
+                    zedGraph.Refresh();
+                    zedGraph.Invalidate();
+                    countTime = 0;
+                    this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
+                    this.label8.Text = "count = " + countTime;
+                    connectTriger = true;
+                    this.label13.Text = "Disconnected!";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -222,6 +283,7 @@ namespace ServoApp
             ++countTime;
             this.button2.Enabled = true;
             this.button3.Enabled = true;
+            this.button4.Enabled = true;
             if (trigerStartApp)
             {
                 timer.Tick += Timer_Tick;
@@ -300,6 +362,7 @@ namespace ServoApp
                 }
             }
             this.button1.Enabled = true;
+            this.button4.Enabled = true;
             triger = true;
             this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
             this.label8.Text = "count = " + countTime;
