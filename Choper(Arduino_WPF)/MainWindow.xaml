@@ -1,0 +1,65 @@
+﻿<Window x:Class="Choper_Arduino_WPF_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Choper_Arduino_WPF_"
+        xmlns:zed="clr-namespace:ZedGraph;assembly=ZedGraph"
+        xmlns:mac="clr-namespace:XComponent.SliderBar;assembly=MACTrackBarLib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1200" MinWidth="1200" MinHeight="700" Background="#FF302F2F">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="1" Background="Silver">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"></RowDefinition>
+                <RowDefinition Height="4.5*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2.8*"></RowDefinition>
+                <RowDefinition Height="0.4*"></RowDefinition>
+                <RowDefinition Height="2.8*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="4.0*"></RowDefinition>
+                <RowDefinition Height="0.4*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="0.4*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <WindowsFormsHost Grid.Row="1" Grid.ColumnSpan="19" Margin="0" Padding="0,5,5,0">
+                <mac:MACTrackBar x:Name="trackBar1" TickFrequency="10" Maximum="180" IndentWidth="4" TickHeight="4" ImeMode="On" LargeChange="2" Enabled="True" TrackLineHeight="2" Visible="False" Margin="20, 0, 0, 0" ForeColor="Black" BorderStyle="None"/>
+            </WindowsFormsHost>
+            <Label x:Name="label2" Grid.Row="1" Grid.Column="19" FontWeight="Bold" FontSize="16" Margin="3,6,0,6">angle = 0</Label>
+            <Label x:Name="label11" Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16" Margin="3,6,0,6">PORT</Label>
+            
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+        </Grid>
+
+    </Grid>
+</Window>
