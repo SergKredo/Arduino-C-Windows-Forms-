@@ -192,6 +192,7 @@ namespace ServoApp
                     this.comboBox2.SelectedItem = comboBox2.Items[1];
                 }
             }
+            this.label13.Text = null;
         }
 
         private void ActiveElementComboBox(object sender, EventArgs e)
