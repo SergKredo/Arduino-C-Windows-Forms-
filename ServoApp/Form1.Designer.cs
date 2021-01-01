@@ -372,14 +372,15 @@ namespace ServoApp
             // 
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
-            "curve1",
-            "curve2",
-            "curve3",
-            "curve4"});
+            "servo (curve 1)",
+            "servo - filter (curve 2)",
+            "light (curve 3)",
+            "light - filter (curve 4)"});
             this.checkedListBox1.Location = new System.Drawing.Point(246, 533);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(416, 64);
             this.checkedListBox1.TabIndex = 36;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label13
             // 

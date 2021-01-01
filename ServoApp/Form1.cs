@@ -26,12 +26,12 @@ namespace ServoApp
         ZedGraphControl zedGraph;
         RollingPointPairList _data;
         int _capacity = 100;
-        PointPairList[] lists = { new PointPairList(), new PointPairList(), new PointPairList() };
-        LineItem[] myCurves = new LineItem[3];
-        string[] dataCurves = { null, null, null, null };
-        List<string> dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00" };
+        PointPairList[] lists = { new PointPairList(), new PointPairList(), new PointPairList(), new PointPairList() };
+        LineItem[] myCurves = new LineItem[4];
+        string[] dataCurves = { null, null, null, null, null };
+        List<string> dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00", "0.00" };
         int count, i, countTime = 0;
-        double x, y1, y2, y3, global, time = 0;
+        double x, y1, y2, y3, y4, global, time = 0;
         long timeStart, timeContinue = 0;
         string serialPortName;
         public Form1()
@@ -101,31 +101,37 @@ namespace ServoApp
                 y1 = Convert.ToDouble(dataCurves[1].Replace('.', ','));
                 y2 = Convert.ToDouble(dataCurves[2].Replace('.', ','));
                 y3 = Convert.ToDouble(dataCurves[3].Replace('.', ','));
+                y4 = Convert.ToDouble(dataCurves[4].Replace('.', ','));
             }
             catch
             {
                 y1 = Convert.ToDouble(dataCurves[1]);
                 y2 = Convert.ToDouble(dataCurves[2]);
                 y3 = Convert.ToDouble(dataCurves[3]);
+                y3 = Convert.ToDouble(dataCurves[4]);
             }
             _data.Add(x, y1);
             _data.Add(x, y2);
             _data.Add(x, y3);
+            _data.Add(x, y4);
             double xmin = x - _capacity * 0.1;
             double xmax = x;
             lists[0].Add(x, y1);
             lists[1].Add(x, y2);
             lists[2].Add(x, y3);
+            lists[3].Add(x, y4);
             // Generate a red curve with diamond
             // symbols, and "Porsche" in the legend
             if (i++ == 0)
             {
-                myCurves[0] = myPane.AddCurve("Servo",
+                myCurves[0] = myPane.AddCurve("servo (curve 1)",
                    lists[0], Color.FromArgb(6, 245, 7), SymbolType.None);
-                myCurves[1] = myPane.AddCurve("Light",
-                   lists[1], Color.Red, SymbolType.None);
-                myCurves[2] = myPane.AddCurve("Filter(Servo)",
+                myCurves[2] = myPane.AddCurve("servo - filter (curve 2)",
                    lists[2], Color.Yellow, SymbolType.None);
+                myCurves[1] = myPane.AddCurve("light (curve 3)",
+                   lists[1], Color.Red, SymbolType.None);
+                myCurves[3] = myPane.AddCurve("light - filter (curve 4)",
+                   lists[3], Color.BlueViolet, SymbolType.None);
                 //myCurve.Line.IsSmooth = true;
             }
             //double trackNumberFirst = global + 1;
@@ -137,6 +143,7 @@ namespace ServoApp
             myCurves[0].Symbol.Size = 1;
             myCurves[1].Line.Width = 2;
             myCurves[2].Line.Width = 2;
+            myCurves[3].Line.Width = 2;
             myPane.YAxis.Scale.MinAuto = true;
             myPane.YAxis.Scale.MaxAuto = true;
             myPane.XAxis.Scale.MinAuto = false;
@@ -147,6 +154,7 @@ namespace ServoApp
             myCurves[0].AddPoint(x, y1);
             myCurves[1].AddPoint(x, y2);
             myCurves[2].AddPoint(x, y3);
+            myCurves[3].AddPoint(x, y4);
             zedGraph.AxisChange();
             zedGraph.Refresh();
             serialPort.DiscardInBuffer();
@@ -226,12 +234,12 @@ namespace ServoApp
                     timer.Stop();
                     trigerButton2 = false;
                     myPane.CurveList.Clear();
-                    lists = new PointPairList[3] { new PointPairList(), new PointPairList(), new PointPairList() };
-                    myCurves = new LineItem[3];
-                    dataCurves = new string[4] { null, null, null, null };
-                    dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00" };
+                    lists = new PointPairList[4] { new PointPairList(), new PointPairList(), new PointPairList(), new PointPairList() };
+                    myCurves = new LineItem[4];
+                    dataCurves = new string[5] { null, null, null, null, null };
+                    dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00", "0.00" };
                     count = 0; i = 0;
-                    x = 0; y1 = 0; y2 = 0; y3 = 0; global = 0;
+                    x = 0; y1 = 0; y2 = 0; y3 = 0; y4 = 0; global = 0;
                     time = 0;
 
                     zedGraph.GraphPane.YAxis.Scale.Min = 0;
@@ -251,6 +259,15 @@ namespace ServoApp
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (var item in this.checkedListBox1.CheckedItems)
+            { 
+            
+            }
+
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -437,12 +454,12 @@ namespace ServoApp
             timer.Stop();
             trigerButton2 = false;
             myPane.CurveList.Clear();
-            lists = new PointPairList[3] { new PointPairList(), new PointPairList(), new PointPairList() };
-            myCurves = new LineItem[3];
-            dataCurves = new string[4] { null, null, null, null };
-            dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00" };
+            lists = new PointPairList[4] { new PointPairList(), new PointPairList(), new PointPairList(), new PointPairList() };
+            myCurves = new LineItem[4];
+            dataCurves = new string[5] { null, null, null, null, null };
+            dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00", "0.00" };
             count = 0; i = 0;
-            x = 0; y1 = 0; y2 = 0; y3 = 0; global = 0;
+            x = 0; y1 = 0; y2 = 0; y3 = 0; y4 = 0; global = 0;
             time = 0;
 
             zedGraph.GraphPane.YAxis.Scale.Min = 0;

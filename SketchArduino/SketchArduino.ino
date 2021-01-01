@@ -18,6 +18,7 @@ float Xe = 0.0;
 
 
 float filtSignal = 0.0;   // фильтрованный сигнал
+float filtSignalOtherDetector = 0.0;   // фильтрованный сигнал с другого датчика
 
 // бегущее среднее, ещё более оптимальный вариант предыдущего фильтра
 float expRunningAverage(float newVal)
@@ -85,7 +86,10 @@ void loop()
 		Serial.print(";   ");
 
 		//Serial.println(valKalman);
-		Serial.println(filtSignal);
+		Serial.print(filtSignal);
+		Serial.print(";   ");
+
+		Serial.println(filtSignalOtherDetector);
 		//Serial.println(";");
 		valPlus = --val;
 		servo.write(valPlus);
@@ -110,6 +114,9 @@ void measure() {
 		tmr = millis();
 		filtSignal = median(valPinServo);
 		filtSignal = filter(filtSignal);
+
+		filtSignalOtherDetector = median(valPinOtherDetector);
+		filtSignalOtherDetector = filter(filtSignalOtherDetector);
 		//filtSignal = expRunningAverage(filtSignal); // + к медиане
 	}
 }
