@@ -259,7 +259,7 @@ namespace ServoApp
             this.textBox4.Size = new System.Drawing.Size(103, 20);
             this.textBox4.TabIndex = 26;
             this.textBox4.Value = new decimal(new int[] {
-            200,
+            5000,
             0,
             0,
             0});
@@ -281,7 +281,7 @@ namespace ServoApp
             this.textBox3.Size = new System.Drawing.Size(103, 20);
             this.textBox3.TabIndex = 27;
             this.textBox3.Value = new decimal(new int[] {
-            200,
+            5000,
             0,
             0,
             0});

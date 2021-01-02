@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Collections;
 using ZedGraph;
 using System.Runtime.Remoting.Messaging;
 
@@ -22,6 +23,7 @@ namespace ServoApp
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool triger, trigerButton2, trigerStartApp = true;
         bool connectTriger = true;
+        bool curveOne = true; bool curveThree = true; bool curveFour = true;
         static GraphPane myPane;
         ZedGraphControl zedGraph;
         RollingPointPairList _data;
@@ -30,6 +32,17 @@ namespace ServoApp
         LineItem[] myCurves = new LineItem[4];
         string[] dataCurves = { null, null, null, null, null };
         List<string> dataCurvesBuffer = new List<string>() { "0.00", "0.00", "0.00", "0.00" };
+        SortedDictionary<double, double> dataDictionary = new SortedDictionary<double, double>();
+        public object sendersReset = new object();
+        public EventArgs eReset = new EventArgs();
+
+        public object sendersPause = new object();
+        public EventArgs ePause = new EventArgs();
+
+        public object senderCheckListSelected = new object();
+        public EventArgs eCheckListSelected = new EventArgs();
+
+
         int count, i, countTime = 0;
         double x, y1, y2, y3, y4, global, time = 0;
         long timeStart, timeContinue = 0;
@@ -56,6 +69,11 @@ namespace ServoApp
             this.button4.Enabled = false;
             this.trackBar1.Enabled = false;
             SetColors(myPane);
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.SetItemCheckState(0, CheckState.Checked);
+            this.checkedListBox1.SetItemCheckState(1, CheckState.Indeterminate);
+            this.checkedListBox1.SetItemCheckState(2, CheckState.Checked);
+            this.checkedListBox1.SetItemCheckState(3, CheckState.Checked);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -120,30 +138,53 @@ namespace ServoApp
             lists[1].Add(x, y2);
             lists[2].Add(x, y3);
             lists[3].Add(x, y4);
-            // Generate a red curve with diamond
-            // symbols, and "Porsche" in the legend
+
+
             if (i++ == 0)
             {
+
                 myCurves[0] = myPane.AddCurve("servo (curve 1)",
                    lists[0], Color.FromArgb(6, 245, 7), SymbolType.None);
+
                 myCurves[2] = myPane.AddCurve("servo - filter (curve 2)",
-                   lists[2], Color.Yellow, SymbolType.None);
+               lists[2], Color.Yellow, SymbolType.None);
+
                 myCurves[1] = myPane.AddCurve("light (curve 3)",
-                   lists[1], Color.Red, SymbolType.None);
+               lists[1], Color.Red, SymbolType.None);
+
                 myCurves[3] = myPane.AddCurve("light - filter (curve 4)",
-                   lists[3], Color.BlueViolet, SymbolType.None);
-                //myCurve.Line.IsSmooth = true;
+               lists[3], Color.BlueViolet, SymbolType.None);
+
             }
-            //double trackNumberFirst = global + 1;
-            //serialPort.WriteLine(trackNumberFirst.ToString());
-            //textBox5.Text += dataCurves[0]+Environment.NewLine;
-            myCurves[0].Line.IsVisible = true;
-            myCurves[0].Symbol.Fill.Color = Color.Blue;
-            myCurves[0].Symbol.Fill.Type = FillType.Solid;
-            myCurves[0].Symbol.Size = 1;
-            myCurves[1].Line.Width = 2;
-            myCurves[2].Line.Width = 2;
-            myCurves[3].Line.Width = 2;
+
+            if (curveOne)
+            {
+                myCurves[0].Line.IsVisible = true;
+            }
+            else
+            {
+                myCurves[0].Line.IsVisible = false;
+            }
+
+            myCurves[2].Line.IsVisible = true;
+
+            if (curveThree)
+            {
+                myCurves[1].Line.IsVisible = true;
+            }
+            else
+            {
+                myCurves[1].Line.IsVisible = false;
+            }
+            if (curveFour)
+            {
+                myCurves[3].Line.IsVisible = true;
+            }
+            else
+            {
+                myCurves[3].Line.IsVisible = false;
+            }
+
             myPane.YAxis.Scale.MinAuto = true;
             myPane.YAxis.Scale.MaxAuto = true;
             myPane.XAxis.Scale.MinAuto = false;
@@ -152,9 +193,16 @@ namespace ServoApp
             myPane.XAxis.Scale.Max = xmax;
             myPane.IsBoundedRanges = true;
             myCurves[0].AddPoint(x, y1);
+            myCurves[0].Symbol.Fill.Color = Color.Blue;
+            myCurves[0].Symbol.Fill.Type = FillType.Solid;
+            myCurves[0].Symbol.Size = 1;
             myCurves[1].AddPoint(x, y2);
+            myCurves[1].Line.Width = 2;
             myCurves[2].AddPoint(x, y3);
+            myCurves[2].Line.Width = 2;
             myCurves[3].AddPoint(x, y4);
+            myCurves[3].Line.Width = 2;
+
             zedGraph.AxisChange();
             zedGraph.Refresh();
             serialPort.DiscardInBuffer();
@@ -263,11 +311,30 @@ namespace ServoApp
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (var item in this.checkedListBox1.CheckedItems)
-            { 
-            
+            senderCheckListSelected = sender;
+            eCheckListSelected = e;
+            if (Convert.ToDouble(this.label8.Text.Remove(0, label8.Text.IndexOf('=') + 2)) != 0)
+            {
+                button2_Click(sendersPause, ePause);
+                curveOne = curveThree = curveFour = false;
             }
 
+            foreach (var item in this.checkedListBox1.CheckedItems)
+            {
+                switch (item.ToString())
+                {
+                    case "servo (curve 1)":
+                        curveOne = true;
+                        break;
+                    case "light (curve 3)":
+                        curveThree = true;
+                        break;
+                    case "light - filter (curve 4)":
+                        curveFour = true;
+                        break;
+                    default: break;
+                }
+            }
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -384,8 +451,17 @@ namespace ServoApp
             triger = true;
             this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
             this.label8.Text = "count = " + countTime;
+
         }
 
+
+        private void SetItemCheckState()
+        {
+            for (int i = 0; i < this.checkedListBox1.Items.Count; i++)
+            {
+                this.checkedListBox1.SetItemCheckState(i, CheckState.Unchecked);
+            }
+        }
         private static void SetColors(GraphPane pane)
         {
             // !!!
@@ -447,6 +523,9 @@ namespace ServoApp
 
         private void button3_Click(object sender, EventArgs e)
         {
+            checkedListBox1_SelectedIndexChanged(senderCheckListSelected, eCheckListSelected);
+            sendersReset = sender;
+            eReset = e;
             this.button1.Enabled = true;
             this.button2.Enabled = false;
             this.button3.Enabled = false;
@@ -475,6 +554,8 @@ namespace ServoApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            sendersPause = sender;
+            ePause = e;
             this.button1.Enabled = true;
             this.button3.Enabled = true;
             this.button2.Enabled = false;
