@@ -60,6 +60,7 @@ namespace ServoApp
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox4)).BeginInit();
@@ -457,12 +458,24 @@ namespace ServoApp
             this.zedGraphControl1.TabIndex = 14;
             this.zedGraphControl1.UseExtendedPrintDialog = true;
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Silver;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label14.Location = new System.Drawing.Point(932, 631);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(64, 20);
+            this.label14.TabIndex = 38;
+            this.label14.Text = "f = 0 Hz";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.comboBox2);
@@ -539,6 +552,7 @@ namespace ServoApp
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ZedGraph.ZedGraphControl zedGraphControl1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label label14;
     }
 }
 

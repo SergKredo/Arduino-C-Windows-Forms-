@@ -12,6 +12,7 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.Collections;
 using ZedGraph;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 
 namespace ServoApp
@@ -47,6 +48,8 @@ namespace ServoApp
         public EventArgs eCheckListSelected = new EventArgs();
 
 
+        List<List<string>> listData = new List<List<string>>() { new List<string>(), new List<string>(), new List<string>(), new List<string>(), new List<string>() };
+
         int count, i, countTime = 0;
         double x, y1, y2, y3, y4, global, time = 0;
         long timeStart, timeContinue = 0;
@@ -54,17 +57,11 @@ namespace ServoApp
         public Form1()
         {
             InitializeComponent();
-            //serialPort = new SerialPort();
-            //serialPort.PortName = "COM4";
-            //serialPort.BaudRate = 115200;
-            //serialPort.Open();
             timer.Enabled = true;
             timer.Interval = 1;
             zedGraph = this.zedGraphControl1;
             _data = new RollingPointPairList(_capacity);
-            //zedGraph.Location = new System.Drawing.Point();
-            //zedGraph.Name = "zedGraph";
-            //zedGraph.Size = new System.Drawing.Size(300, 300);
+
             this.Controls.Add(zedGraph);
             CreateGraph(zedGraph);
             this.button2.Enabled = false;
@@ -138,14 +135,15 @@ namespace ServoApp
             }
 
 
+            //////// Алгоритм для инверсии кривых от датчика освещенности ///////////////
+
             yIStrih[1] = y2; yIStrih[3] = y4;
-
-            y2 = Math.Abs(yNull[1] + (yI[1]-yIStrih[1]));
-            y4 = Math.Abs(yNull[3] + (yI[3]-yIStrih[3]));
-
+            y2 = Math.Abs(yNull[1] + (yI[1] - yIStrih[1]));
+            y4 = Math.Abs(yNull[3] + (yI[3] - yIStrih[3]));
             yNull[1] = y2; yNull[3] = y4;
             yI[1] = yIStrih[1]; yI[3] = yIStrih[3];
 
+            /////////////////////////////////////////////////////////////////////////////
 
             _data.Add(x, y1);
             _data.Add(x, y2);
@@ -158,6 +156,11 @@ namespace ServoApp
             lists[2].Add(x, y3);
             lists[3].Add(x, y4);
 
+            listData[0].Add(y1.ToString());
+            listData[1].Add(y2.ToString());
+            listData[2].Add(y3.ToString());
+            listData[3].Add(y4.ToString());
+            listData[4].Add(Math.Round(x,3).ToString());
 
             if (i++ == 0)
             {
@@ -204,6 +207,8 @@ namespace ServoApp
                 myCurves[3].Line.IsVisible = false;
             }
 
+
+
             myPane.YAxis.Scale.MinAuto = true;
             myPane.YAxis.Scale.MaxAuto = true;
             myPane.XAxis.Scale.MinAuto = false;
@@ -226,6 +231,7 @@ namespace ServoApp
             serialPort.DiscardOutBuffer();
             this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
             this.label8.Text = "count = " + countTime;
+            this.label14.Text = $"f = {Math.Round((countTime / Math.Round(x, 2)))} Hz";
             timeContinue = DateTime.Now.Ticks;
             timeSpan = new TimeSpan(timeContinue - timeStart);
             timeStart = timeContinue;
@@ -358,11 +364,53 @@ namespace ServoApp
             button2_Click(sendersPause, ePause);
             if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
+            double frequency = Math.Round((countTime / Math.Round(x, 2)));
+            string data = $"Choper 'Arduino_Uno & Winforms_C# by SergKredo' - ({frequency} Hz) {Math.Round(x, 2)} sec: {DateTime.Now.ToLongTimeString()}\r\n";
+            data += "Time, sec";
+            if (myCurves[0].Line.IsVisible)
+            {
+                data += " \t Servo_curve1, a.u.";
+            }
+            if (myCurves[1].Line.IsVisible)
+            {
+                data += " \t Light_curve3, a.u.";
+            }
+            if (myCurves[2].Line.IsVisible)
+            {
+                data += " \t Servo-filter_curve2, a.u.";
+            }
+            if (myCurves[3].Line.IsVisible)
+            {
+                data += " \t Light-filter_curve4, a.u.";
+            }
+            data += $"\r\n";
+
+            for (int i = 0; i < listData[0].Count; i++)
+            {
+                data += $"{listData[4][i]}";
+                if (myCurves[0].Line.IsVisible)
+                {
+                    data += $" \t {listData[0][i]}";
+                }
+                if (myCurves[1].Line.IsVisible)
+                {
+                    data += $" \t {listData[1][i]}";
+                }
+                if (myCurves[2].Line.IsVisible)
+                {
+                    data += $" \t {listData[2][i]}";
+                }
+                if (myCurves[3].Line.IsVisible)
+                {
+                    data += $" \t {listData[3][i]}";
+                }
+                data += $"\r\n";
+            }
+
             // получаем выбранный файл
             string filename = saveFileDialog1.FileName;
             // сохраняем текст в файл
-            System.IO.File.WriteAllText(filename, textBox1.Text);
-            MessageBox.Show("Файл сохранен");
+            File.WriteAllText(filename, data, Encoding.UTF8);
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -412,7 +460,6 @@ namespace ServoApp
             double trackNumber = trackBar1.Value + 1;
             serialPort.WriteLine(trackNumber.ToString());
             label2.Text = "angle = " + trackBar1.Value.ToString();
-            //textBox5.Text += serialPort.ReadLine() + Environment.NewLine;
             serialPort.DiscardInBuffer();
             serialPort.DiscardOutBuffer();
             this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
@@ -457,21 +504,17 @@ namespace ServoApp
                 }
                 if (anglOne <= angleTwo)
                 {
-                    //timer.Stop();
                     angleThree = anglOne;
                     anglOne = angleTwo;
                     serialPort.WriteLine(anglOne.ToString());
                     global = anglOne;
-                    //textBox5.Text += await SendFromServoLessAngleTwo();
                     await SendLess();
                 }
                 if (anglOne == angleTwo)
                 {
-                    //timer.Stop();
                     anglOne = angleThree;
                     serialPort.WriteLine(anglOne.ToString());
                     global = anglOne;
-                    //textBox5.Text += await SendFromServoEquallyAngleTwo();
                     await SendEqually();
                 }
             }
@@ -482,14 +525,6 @@ namespace ServoApp
 
         }
 
-
-        private void SetItemCheckState()
-        {
-            for (int i = 0; i < this.checkedListBox1.Items.Count; i++)
-            {
-                this.checkedListBox1.SetItemCheckState(i, CheckState.Unchecked);
-            }
-        }
         private static void SetColors(GraphPane pane)
         {
             // !!!
@@ -551,12 +586,15 @@ namespace ServoApp
 
         private void button3_Click(object sender, EventArgs e)
         {
+            listData = new List<List<string>>() { new List<string>(), new List<string>(), new List<string>(), new List<string>(), new List<string>() };
+
             checkedListBox1_SelectedIndexChanged(senderCheckListSelected, eCheckListSelected);
             sendersReset = sender;
             eReset = e;
             this.button1.Enabled = true;
             this.button2.Enabled = false;
             this.button3.Enabled = false;
+            this.button4.Enabled = false;
             this.trackBar1.Enabled = true;
             timer.Stop();
             trigerButton2 = false;
