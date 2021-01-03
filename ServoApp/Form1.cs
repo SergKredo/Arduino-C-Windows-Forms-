@@ -36,6 +36,10 @@ namespace ServoApp
         public object sendersReset = new object();
         public EventArgs eReset = new EventArgs();
 
+        double[] yNull = new double[4];
+        double[] yI = new double[4];
+        double[] yIStrih = new double[4];
+
         public object sendersPause = new object();
         public EventArgs ePause = new EventArgs();
 
@@ -74,6 +78,10 @@ namespace ServoApp
             this.checkedListBox1.SetItemCheckState(1, CheckState.Indeterminate);
             this.checkedListBox1.SetItemCheckState(2, CheckState.Checked);
             this.checkedListBox1.SetItemCheckState(3, CheckState.Checked);
+
+            saveFileDialog1.Filter = "Data files(*.dat)|*.dat|Text files(*.txt)|*.txt|All files(*.*)|*.*";
+            saveFileDialog1.DefaultExt = "*.dat";
+            saveFileDialog1.AddExtension = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -97,7 +105,7 @@ namespace ServoApp
                 {
                     throw new Exception();
                 }
-                string pattern = @"(?<numbers>\d+[\,*\.*]\d*)";  // Шаблон регулярных выражений для поиска в тексте всех числовых данных
+                string pattern = @"(?<numbers>\d+[\,*\.*]\d*)|(?<numbers>\d+)";  // Шаблон регулярных выражений для поиска в тексте всех числовых данных
                 Regex regex = new Regex(pattern);
                 foreach (Match item in regex.Matches(dataCurves[0]))
                 {
@@ -126,8 +134,19 @@ namespace ServoApp
                 y1 = Convert.ToDouble(dataCurves[1]);
                 y2 = Convert.ToDouble(dataCurves[2]);
                 y3 = Convert.ToDouble(dataCurves[3]);
-                y3 = Convert.ToDouble(dataCurves[4]);
+                y4 = Convert.ToDouble(dataCurves[4]);
             }
+
+
+            yIStrih[1] = y2; yIStrih[3] = y4;
+
+            y2 = Math.Abs(yNull[1] + (yI[1]-yIStrih[1]));
+            y4 = Math.Abs(yNull[3] + (yI[3]-yIStrih[3]));
+
+            yNull[1] = y2; yNull[3] = y4;
+            yI[1] = yIStrih[1]; yI[3] = yIStrih[3];
+
+
             _data.Add(x, y1);
             _data.Add(x, y2);
             _data.Add(x, y3);
@@ -150,10 +169,10 @@ namespace ServoApp
                lists[2], Color.Yellow, SymbolType.None);
 
                 myCurves[1] = myPane.AddCurve("light (curve 3)",
-               lists[1], Color.Red, SymbolType.None);
+               lists[1], Color.BlueViolet, SymbolType.None);
 
                 myCurves[3] = myPane.AddCurve("light - filter (curve 4)",
-               lists[3], Color.BlueViolet, SymbolType.None);
+               lists[3], Color.Red, SymbolType.None);
 
             }
 
@@ -193,9 +212,7 @@ namespace ServoApp
             myPane.XAxis.Scale.Max = xmax;
             myPane.IsBoundedRanges = true;
             myCurves[0].AddPoint(x, y1);
-            myCurves[0].Symbol.Fill.Color = Color.Blue;
-            myCurves[0].Symbol.Fill.Type = FillType.Solid;
-            myCurves[0].Symbol.Size = 1;
+            myCurves[0].Line.Width = 2;
             myCurves[1].AddPoint(x, y2);
             myCurves[1].Line.Width = 2;
             myCurves[2].AddPoint(x, y3);
@@ -313,11 +330,9 @@ namespace ServoApp
         {
             senderCheckListSelected = sender;
             eCheckListSelected = e;
-            if (Convert.ToDouble(this.label8.Text.Remove(0, label8.Text.IndexOf('=') + 2)) != 0)
-            {
-                button2_Click(sendersPause, ePause);
-                curveOne = curveThree = curveFour = false;
-            }
+
+            curveOne = curveThree = curveFour = false;
+
 
             foreach (var item in this.checkedListBox1.CheckedItems)
             {
@@ -335,6 +350,19 @@ namespace ServoApp
                     default: break;
                 }
             }
+            this.checkedListBox1.SetItemCheckState(1, CheckState.Indeterminate);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button2_Click(sendersPause, ePause);
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = saveFileDialog1.FileName;
+            // сохраняем текст в файл
+            System.IO.File.WriteAllText(filename, textBox1.Text);
+            MessageBox.Show("Файл сохранен");
         }
 
         private static void CreateGraph(ZedGraphControl zgc)
@@ -411,6 +439,7 @@ namespace ServoApp
             this.button1.Enabled = false;
             this.button2.Enabled = true;
             this.button3.Enabled = true;
+            this.button4.Enabled = true;
             triger = false;
             double anglOne = Convert.ToDouble(textBox1.Text);
             double angleTwo = Convert.ToDouble(textBox2.Text);
@@ -447,7 +476,6 @@ namespace ServoApp
                 }
             }
             this.button1.Enabled = true;
-            this.button4.Enabled = true;
             triger = true;
             this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
             this.label8.Text = "count = " + countTime;
@@ -564,25 +592,7 @@ namespace ServoApp
             trigerButton2 = false;
         }
 
-        async Task<string> SendFromServoLessAngleTwo()  // Асинхронный метод, который возвращает задачу generics Task типа string
-        {
-            return await Task.Run(() => // Класс-объект Task ставит в очередь заданную работу для запуска в пуле потоков и возвращает объект типа Task<TResult>
-            {
-                Thread.Sleep((int)Convert.ToDouble(textBox4.Text));
-                //timer.Start();
-                return serialPort.ReadLine() + Environment.NewLine;
-            }
-            );
-        }
-        async Task<string> SendFromServoEquallyAngleTwo()  // Асинхронный метод, который возвращает задачу generics Task типа string
-        {
-            return await Task.Run(() => // Класс-объект Task ставит в очередь заданную работу для запуска в пуле потоков и возвращает объект типа Task<TResult>
-            {
-                Thread.Sleep((int)Convert.ToDouble(textBox3.Text));
-                return serialPort.ReadLine() + Environment.NewLine;
-            }
-            );
-        }
+
         async Task SendLess()
         {
             await Task.Run(() => // Класс-объект Task ставит в очередь заданную работу для запуска в пуле потоков и возвращает объект типа Task<TResult>

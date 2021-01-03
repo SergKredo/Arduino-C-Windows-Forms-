@@ -6,7 +6,7 @@
 #include <Servo.h>
 
 // переменные для фильтра калмана
-float varVolt = 6.9;  // среднее отклонение (ищем в excel)
+float varVolt = 0.6;  // среднее отклонение (ищем в excel)
 float varProcess = 100; // скорость реакции на изменение (подбирается вручную)
 float Pc = 0.0;
 float G = 0.0;
@@ -78,18 +78,18 @@ void loop()
 		measure();
 		//valKalman = filter(valPinServo);
 		//Serial.println("$");
-		Serial.print(valPinServo);
+		Serial.print(map(valPinServo,0, 1023, 0.00, 10000));
 		//Serial.print(" ");
 		Serial.print(";   ");
 		//Serial.println(fil_var);
-		Serial.print(valPinOtherDetector);
+		Serial.print(map(valPinOtherDetector, 0, 1023, 0.00, 10000));
 		Serial.print(";   ");
 
 		//Serial.println(valKalman);
-		Serial.print(filtSignal);
+		Serial.print(map(filtSignal, 0, 1023, 0.00, 10000));
 		Serial.print(";   ");
 
-		Serial.println(filtSignalOtherDetector);
+		Serial.println(map(filtSignalOtherDetector, 0, 1023, 0.00, 10000));
 		//Serial.println(";");
 		valPlus = --val;
 		servo.write(valPlus);

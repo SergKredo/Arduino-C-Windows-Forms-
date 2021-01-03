@@ -22,7 +22,7 @@ namespace ServoApp
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("App terminated prematurely!");
             }
         }
     }

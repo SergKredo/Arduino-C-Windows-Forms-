@@ -59,6 +59,7 @@ namespace ServoApp
             this.trackBar1 = new XComponent.SliderBar.MACTrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox4)).BeginInit();
@@ -312,6 +313,7 @@ namespace ServoApp
             this.button4.TabIndex = 29;
             this.button4.Text = "Save";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label11
             // 
@@ -536,6 +538,7 @@ namespace ServoApp
         private XComponent.SliderBar.MACTrackBar trackBar1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ZedGraph.ZedGraphControl zedGraphControl1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
