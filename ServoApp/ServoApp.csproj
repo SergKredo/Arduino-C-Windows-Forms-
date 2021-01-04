@@ -7,7 +7,7 @@
     <ProjectGuid>{03721F82-8DFE-4A8F-A3A0-F4AE07E762FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ServoApp</RootNamespace>
-    <AssemblyName>ServoApp</AssemblyName>
+    <AssemblyName>Choper</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>arduino2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MACTrackBarLib, Version=1.0.5896.38740, Culture=neutral, processorArchitecture=MSIL">
@@ -90,6 +93,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="arduino.ico" />
+    <Content Include="arduino2.ico" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

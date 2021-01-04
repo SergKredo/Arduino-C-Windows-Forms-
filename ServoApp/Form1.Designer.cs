@@ -30,6 +30,7 @@ namespace ServoApp
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -81,173 +82,105 @@ namespace ServoApp
             // label2
             // 
             this.label2.AutoEllipsis = true;
-            this.label2.AutoSize = true;
+            resources.ApplyResources(this.label2, "label2");
             this.label2.BackColor = System.Drawing.Color.Silver;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(1075, 481);
-            this.label2.Margin = new System.Windows.Forms.Padding(3);
             this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(3);
-            this.label2.Size = new System.Drawing.Size(89, 26);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "angle = 0";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
+            resources.ApplyResources(this.label3, "label3");
             this.label3.BackColor = System.Drawing.Color.Silver;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(623, 532);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 20);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "angle 1";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            resources.ApplyResources(this.label4, "label4");
             this.label4.BackColor = System.Drawing.Color.Silver;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(623, 567);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 20);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "angle 2";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
+            resources.ApplyResources(this.label5, "label5");
             this.label5.BackColor = System.Drawing.Color.Silver;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(772, 565);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 20);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "delay (t2)";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
+            resources.ApplyResources(this.label6, "label6");
             this.label6.BackColor = System.Drawing.Color.Silver;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(773, 532);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 20);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "delay (t1)";
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(189, 607);
+            resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 31);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(294, 607);
+            resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(101, 31);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Pause";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(399, 607);
+            resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(101, 31);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Reset";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
+            resources.ApplyResources(this.label7, "label7");
             this.label7.BackColor = System.Drawing.Color.Silver;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(624, 629);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 20);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "all time = 0 s";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
+            resources.ApplyResources(this.label8, "label8");
             this.label8.BackColor = System.Drawing.Color.Silver;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(624, 601);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(84, 20);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "count = 0";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
+            resources.ApplyResources(this.label9, "label9");
             this.label9.BackColor = System.Drawing.Color.Silver;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(772, 601);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(63, 20);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "number";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            resources.ApplyResources(this.label1, "label1");
             this.label1.BackColor = System.Drawing.Color.Silver;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(923, 532);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 20);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "ms";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
+            resources.ApplyResources(this.label10, "label10");
             this.label10.BackColor = System.Drawing.Color.Silver;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(923, 567);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 20);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "ms";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(690, 534);
+            resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Maximum = new decimal(new int[] {
             180,
             0,
             0,
             0});
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(56, 20);
-            this.textBox1.TabIndex = 24;
             this.textBox1.ValueChanged += new System.EventHandler(this.textBox1_ValueChanged);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(690, 567);
+            resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Maximum = new decimal(new int[] {
             180,
             0,
             0,
             0});
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(56, 20);
-            this.textBox2.TabIndex = 25;
             this.textBox2.Value = new decimal(new int[] {
             60,
             0,
@@ -257,7 +190,7 @@ namespace ServoApp
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(851, 534);
+            resources.ApplyResources(this.textBox4, "textBox4");
             this.textBox4.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -269,8 +202,6 @@ namespace ServoApp
             0,
             0});
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(73, 20);
-            this.textBox4.TabIndex = 26;
             this.textBox4.Value = new decimal(new int[] {
             5000,
             0,
@@ -280,7 +211,7 @@ namespace ServoApp
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(851, 567);
+            resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -292,8 +223,6 @@ namespace ServoApp
             0,
             0});
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(73, 20);
-            this.textBox3.TabIndex = 27;
             this.textBox3.Value = new decimal(new int[] {
             5000,
             0,
@@ -303,15 +232,13 @@ namespace ServoApp
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(851, 602);
+            resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(73, 20);
-            this.textBox5.TabIndex = 28;
             this.textBox5.Value = new decimal(new int[] {
             50,
             0,
@@ -320,45 +247,29 @@ namespace ServoApp
             // 
             // button4
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(504, 607);
+            resources.ApplyResources(this.button4, "button4");
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(101, 31);
-            this.button4.TabIndex = 29;
-            this.button4.Text = "Save";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
+            resources.ApplyResources(this.label11, "label11");
             this.label11.BackColor = System.Drawing.Color.Silver;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(13, 533);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(52, 20);
-            this.label11.TabIndex = 32;
-            this.label11.Text = "PORT";
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
+            resources.ApplyResources(this.label12, "label12");
             this.label12.BackColor = System.Drawing.Color.Silver;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(12, 570);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 20);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "BAUD";
             // 
             // comboBox1
             // 
             this.comboBox1.DisplayMember = "COM4";
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(78, 535);
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(91, 21);
-            this.comboBox1.TabIndex = 34;
             this.comboBox1.ValueMember = "COM4";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -366,20 +277,14 @@ namespace ServoApp
             // 
             this.comboBox2.DisplayMember = "115200";
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(78, 572);
+            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(91, 21);
-            this.comboBox2.TabIndex = 35;
             this.comboBox2.ValueMember = "115200";
             // 
             // button5
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(15, 607);
+            resources.ApplyResources(this.button5, "button5");
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(154, 31);
-            this.button5.TabIndex = 30;
-            this.button5.Text = "Connect";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -387,45 +292,33 @@ namespace ServoApp
             // 
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
-            "servo (curve 1)",
-            "servo - filter (curve 2)",
-            "light (curve 3)",
-            "light - filter (curve 4)"});
-            this.checkedListBox1.Location = new System.Drawing.Point(189, 533);
+            resources.GetString("checkedListBox1.Items"),
+            resources.GetString("checkedListBox1.Items1"),
+            resources.GetString("checkedListBox1.Items2"),
+            resources.GetString("checkedListBox1.Items3")});
+            resources.ApplyResources(this.checkedListBox1, "checkedListBox1");
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(416, 64);
-            this.checkedListBox1.TabIndex = 36;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
+            resources.ApplyResources(this.label13, "label13");
             this.label13.BackColor = System.Drawing.Color.Silver;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(24, 644);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(62, 13);
-            this.label13.TabIndex = 37;
-            this.label13.Text = "Connected!";
             // 
             // trackBar1
             // 
             this.trackBar1.BackColor = System.Drawing.Color.Transparent;
             this.trackBar1.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.trackBar1.BorderStyle = XComponent.SliderBar.MACBorderStyle.Adjust;
-            this.trackBar1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.trackBar1, "trackBar1");
             this.trackBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
-            this.trackBar1.ImeMode = System.Windows.Forms.ImeMode.Alpha;
             this.trackBar1.IndentHeight = 4;
             this.trackBar1.IndentWidth = 4;
             this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(2, 2);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(0);
             this.trackBar1.Maximum = 180;
             this.trackBar1.Minimum = 0;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(1066, 44);
-            this.trackBar1.TabIndex = 0;
             this.trackBar1.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
             this.trackBar1.TickFrequency = 10;
             this.trackBar1.TickHeight = 1;
@@ -440,24 +333,14 @@ namespace ServoApp
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Silver;
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.trackBar1, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 475);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 184F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1191, 186);
-            this.tableLayoutPanel1.TabIndex = 21;
             // 
             // zedGraphControl1
             // 
-            this.zedGraphControl1.AutoScroll = true;
+            resources.ApplyResources(this.zedGraphControl1, "zedGraphControl1");
             this.zedGraphControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.zedGraphControl1.Location = new System.Drawing.Point(0, 0);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -466,24 +349,17 @@ namespace ServoApp
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(1191, 475);
-            this.zedGraphControl1.TabIndex = 14;
             this.zedGraphControl1.UseExtendedPrintDialog = true;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
+            resources.ApplyResources(this.label14, "label14");
             this.label14.BackColor = System.Drawing.Color.Silver;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label14.Location = new System.Drawing.Point(975, 629);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(72, 20);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "f = 0 Hz";
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(1072, 567);
+            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
             this.numericUpDown1.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -495,8 +371,6 @@ namespace ServoApp
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(73, 20);
-            this.numericUpDown1.TabIndex = 44;
             this.numericUpDown1.Value = new decimal(new int[] {
             5000,
             0,
@@ -506,7 +380,7 @@ namespace ServoApp
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(1072, 534);
+            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
             this.numericUpDown2.Maximum = new decimal(new int[] {
             18000000,
             0,
@@ -518,8 +392,6 @@ namespace ServoApp
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(73, 20);
-            this.numericUpDown2.TabIndex = 43;
             this.numericUpDown2.Value = new decimal(new int[] {
             5000,
             0,
@@ -529,65 +401,39 @@ namespace ServoApp
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
+            resources.ApplyResources(this.label15, "label15");
             this.label15.BackColor = System.Drawing.Color.Silver;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label15.Location = new System.Drawing.Point(1144, 567);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 20);
-            this.label15.TabIndex = 42;
-            this.label15.Text = "ms";
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
+            resources.ApplyResources(this.label16, "label16");
             this.label16.BackColor = System.Drawing.Color.Silver;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label16.Location = new System.Drawing.Point(1144, 532);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(30, 20);
-            this.label16.TabIndex = 41;
-            this.label16.Text = "ms";
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
+            resources.ApplyResources(this.label17, "label17");
             this.label17.BackColor = System.Drawing.Color.Silver;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(975, 565);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(93, 20);
-            this.label17.TabIndex = 40;
-            this.label17.Text = "delay (t2-dt)";
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
+            resources.ApplyResources(this.label18, "label18");
             this.label18.BackColor = System.Drawing.Color.Silver;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(975, 532);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(93, 20);
-            this.label18.TabIndex = 39;
-            this.label18.Text = "delay (t1-dt)";
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
+            resources.ApplyResources(this.label19, "label19");
             this.label19.BackColor = System.Drawing.Color.Silver;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(975, 601);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(187, 20);
-            this.label19.TabIndex = 45;
-            this.label19.Text = "dt(ang.2-ang.1) = 200 ms";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.numericUpDown2);
@@ -627,8 +473,6 @@ namespace ServoApp
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Choper by SergKredo";
             this.Load += new System.EventHandler(this.LoadForm1);
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBox2)).EndInit();
