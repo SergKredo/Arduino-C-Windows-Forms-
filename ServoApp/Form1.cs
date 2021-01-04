@@ -37,16 +37,18 @@ namespace ServoApp
         public object sendersReset = new object();
         public EventArgs eReset = new EventArgs();
 
+        double differenceTime;
         double[] yNull = new double[4];
         double[] yI = new double[4];
         double[] yIStrih = new double[4];
+
+        Dictionary<double, double> dictionaryTableTime = new Dictionary<double, double>();
 
         public object sendersPause = new object();
         public EventArgs ePause = new EventArgs();
 
         public object senderCheckListSelected = new object();
         public EventArgs eCheckListSelected = new EventArgs();
-
 
         List<List<string>> listData = new List<List<string>>() { new List<string>(), new List<string>(), new List<string>(), new List<string>(), new List<string>() };
 
@@ -79,7 +81,54 @@ namespace ServoApp
             saveFileDialog1.Filter = "Data files(*.dat)|*.dat|Text files(*.txt)|*.txt|All files(*.*)|*.*";
             saveFileDialog1.DefaultExt = "*.dat";
             saveFileDialog1.AddExtension = true;
+
+            ReadDataTimeAsync();
         }
+
+        async void ReadDataTimeAsync()
+        {
+            string filePath = System.IO.Path.GetFullPath("tableTime.txt");
+            // асинхронное чтение
+            using (StreamReader sr = new StreamReader(filePath, System.Text.Encoding.UTF8))
+            {
+                string line;
+                string pattern = @"(?<numbers>\d+[\,*\.*]\d*)|(?<numbers>\d+)";  // Шаблон регулярных выражений для поиска в тексте всех числовых данных
+                Regex regex = new Regex(pattern);
+                while ((line = await sr.ReadLineAsync()) != null)
+                {
+                    List<double> list = new List<double>();
+                    foreach (Match item in regex.Matches(line))
+                    {
+                        list.Add(Convert.ToDouble(item.Groups["numbers"].Value));
+                    }
+                    dictionaryTableTime.Add(list[0], list[1]);
+                }
+            }
+            decimal numberOne = this.textBox1.Value;
+            decimal numberTwo = this.textBox2.Value;
+            double difference = (double)Math.Abs(numberOne - numberTwo);
+            foreach (KeyValuePair<double, double> keyValuePair in dictionaryTableTime)
+            {
+                if (difference == 0)
+                {
+                    this.label19.Text = $"dt(ang.2-ang.1) = {0} ms";
+                    this.textBox3.Minimum = 0;
+                    this.textBox4.Minimum = 0;
+                }
+                if (keyValuePair.Key == difference)
+                {
+                    differenceTime = Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.label19.Text = $"dt(ang.2-ang.1) = {Math.Round(keyValuePair.Key * keyValuePair.Value * 1000)} ms";
+                    this.textBox3.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.textBox4.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown2.Minimum = this.textBox4.Minimum - (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown2.Value = this.textBox4.Value - (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown1.Minimum = this.textBox3.Minimum - (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown1.Value = this.textBox3.Value - (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                }
+            }
+        }
+
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -160,7 +209,7 @@ namespace ServoApp
             listData[1].Add(y2.ToString());
             listData[2].Add(y3.ToString());
             listData[3].Add(y4.ToString());
-            listData[4].Add(Math.Round(x,3).ToString());
+            listData[4].Add(Math.Round(x, 3).ToString());
 
             if (i++ == 0)
             {
@@ -274,11 +323,6 @@ namespace ServoApp
             this.label13.Text = null;
         }
 
-        private void ActiveElementComboBox(object sender, EventArgs e)
-        {
-
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             try
@@ -332,6 +376,91 @@ namespace ServoApp
             }
         }
 
+        private void textBox1_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            decimal numberOne = numericUpDown.Value;
+            decimal numberTwo = this.textBox2.Value;
+            bool trig = true;
+            double difference = (double)Math.Abs(numberOne - numberTwo);
+            foreach (KeyValuePair<double, double> keyValuePair in dictionaryTableTime)
+            {
+                if (difference == 0 && trig)
+                {
+                    this.label19.Text = $"dt(ang.2-ang.1) = {0} ms";
+                    this.textBox3.Minimum = 0;
+                    this.textBox4.Minimum = 0;
+                    this.numericUpDown2.Value += (decimal)differenceTime;
+                    this.numericUpDown1.Value += (decimal)differenceTime;
+                    trig = false;
+                }
+                if (keyValuePair.Key == difference && trig)
+                {
+                    differenceTime = Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.label19.Text = $"dt(ang.2-ang.1) = {Math.Round(keyValuePair.Key * keyValuePair.Value * 1000)} ms";
+                    this.textBox3.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.textBox4.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown2.Value = this.textBox4.Value - (decimal)differenceTime;
+                    this.numericUpDown1.Value = this.textBox3.Value - (decimal)differenceTime;
+                }
+            }
+        }
+
+        private void textBox2_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            decimal numberOne = numericUpDown.Value;
+            decimal numberTwo = this.textBox1.Value;
+            bool trig = true;
+            double difference = (double)Math.Abs(numberOne - numberTwo);
+            foreach (KeyValuePair<double, double> keyValuePair in dictionaryTableTime)
+            {
+                if (difference == 0 && trig)
+                {
+                    this.label19.Text = $"dt(ang.2-ang.1) = {0} ms";
+                    this.textBox3.Minimum = 0;
+                    this.textBox4.Minimum = 0;
+                    this.numericUpDown2.Value += (decimal)differenceTime;
+                    this.numericUpDown1.Value += (decimal)differenceTime;
+                    trig = false;
+                }
+                if (keyValuePair.Key == difference && trig)
+                {
+                    differenceTime = Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.label19.Text = $"dt(ang.2-ang.1) = {Math.Round(keyValuePair.Key * keyValuePair.Value * 1000)} ms";
+                    this.textBox3.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.textBox4.Minimum = (decimal)Math.Round(keyValuePair.Key * keyValuePair.Value * 1000);
+                    this.numericUpDown2.Value = this.textBox4.Value - (decimal)differenceTime;
+                    this.numericUpDown1.Value = this.textBox3.Value - (decimal)differenceTime;
+                    trig = false;
+                }
+            }
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            this.textBox4.Value = numericUpDown.Value + (decimal)differenceTime;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            this.textBox3.Value = numericUpDown.Value + (decimal)differenceTime;
+        }
+
+        private void textBox4_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            this.numericUpDown2.Value = numericUpDown.Value - (decimal)differenceTime;
+        }
+
+        private void textBox3_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown numericUpDown = sender as NumericUpDown;
+            this.numericUpDown1.Value = numericUpDown.Value - (decimal)differenceTime;
+        }
+
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             senderCheckListSelected = sender;
@@ -359,60 +488,66 @@ namespace ServoApp
             this.checkedListBox1.SetItemCheckState(1, CheckState.Indeterminate);
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
+            StringBuilder builder = new StringBuilder();
             button2_Click(sendersPause, ePause);
             if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             double frequency = Math.Round((countTime / Math.Round(x, 2)));
-            string data = $"Choper 'Arduino_Uno & Winforms_C# by SergKredo' - ({frequency} Hz) {Math.Round(x, 2)} sec: {DateTime.Now.ToLongTimeString()}\r\n";
-            data += "Time, sec";
+            builder.Append($"Choper 'Arduino_Uno & Winforms_C# by SergKredo' - ({frequency} Hz) {Math.Round(x, 2)} sec: {DateTime.Now.ToLongTimeString()}\r\n");
+            builder.Append("Time, sec");
             if (myCurves[0].Line.IsVisible)
             {
-                data += " \t Servo_curve1, a.u.";
+                builder.Append(" \t Servo_curve1, a.u.");
             }
             if (myCurves[1].Line.IsVisible)
             {
-                data += " \t Light_curve3, a.u.";
+                builder.Append(" \t Light_curve3, a.u.");
             }
             if (myCurves[2].Line.IsVisible)
             {
-                data += " \t Servo-filter_curve2, a.u.";
+                builder.Append(" \t Servo-filter_curve2, a.u.");
             }
             if (myCurves[3].Line.IsVisible)
             {
-                data += " \t Light-filter_curve4, a.u.";
+                builder.Append(" \t Light-filter_curve4, a.u.");
             }
-            data += $"\r\n";
+            builder.Append($"\r\n");
 
             for (int i = 0; i < listData[0].Count; i++)
             {
-                data += $"{listData[4][i]}";
+                builder.Append($"{listData[4][i]}");
                 if (myCurves[0].Line.IsVisible)
                 {
-                    data += $" \t {listData[0][i]}";
+                    builder.Append($" \t {listData[0][i]}");
                 }
                 if (myCurves[1].Line.IsVisible)
                 {
-                    data += $" \t {listData[1][i]}";
+                    builder.Append($" \t {listData[1][i]}");
                 }
                 if (myCurves[2].Line.IsVisible)
                 {
-                    data += $" \t {listData[2][i]}";
+                    builder.Append($" \t {listData[2][i]}");
                 }
                 if (myCurves[3].Line.IsVisible)
                 {
-                    data += $" \t {listData[3][i]}";
+                    builder.Append($" \t {listData[3][i]}");
                 }
-                data += $"\r\n";
+                builder.Append($"\r\n");
             }
 
             // получаем выбранный файл
             string filename = saveFileDialog1.FileName;
             // сохраняем текст в файл
-            File.WriteAllText(filename, data, Encoding.UTF8);
+            await WriteAllAsync(filename, builder.ToString());
         }
 
+
+        async Task WriteAllAsync(string filename, string data)
+        {
+            await Task.Run(() => File.WriteAllText(filename, data));
+        }
         private static void CreateGraph(ZedGraphControl zgc)
         {
             myPane = zgc.GraphPane;
@@ -502,7 +637,7 @@ namespace ServoApp
                 {
                     break;
                 }
-                if (anglOne <= angleTwo)
+                if (anglOne <= angleTwo || anglOne >= angleTwo)
                 {
                     angleThree = anglOne;
                     anglOne = angleTwo;
