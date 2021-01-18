@@ -1,3 +1,6 @@
+#include <SoftwareSerial.h>
+#include <HID.h>
+#include <EEPROM.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <ServoDriverSmooth.h>
 #include <ServoSmooth.h>

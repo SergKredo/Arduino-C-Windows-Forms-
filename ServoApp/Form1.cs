@@ -14,6 +14,7 @@ using System.Collections;
 using ZedGraph;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
+using System.Runtime.CompilerServices;
 
 namespace ServoApp
 {
@@ -23,6 +24,7 @@ namespace ServoApp
         TimeSpan timeSpan;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool triger, trigerButton2, trigerStartApp = true;
+        bool trigerLess;
         bool connectTriger = true;
         bool curveOne = true; bool curveThree = true; bool curveFour = true;
         static GraphPane myPane;
@@ -41,6 +43,7 @@ namespace ServoApp
         double[] yNull = new double[4];
         double[] yI = new double[4];
         double[] yIStrih = new double[4];
+        double[] yLessBufer = { 0, 0, 0, 0 };
 
         Dictionary<double, double> dictionaryTableTime = new Dictionary<double, double>();
 
@@ -73,15 +76,16 @@ namespace ServoApp
             this.trackBar1.Enabled = false;
             SetColors(myPane);
             this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.SetItemCheckState(0, CheckState.Checked);
-            this.checkedListBox1.SetItemCheckState(1, CheckState.Indeterminate);
-            this.checkedListBox1.SetItemCheckState(2, CheckState.Checked);
-            this.checkedListBox1.SetItemCheckState(3, CheckState.Checked);
+            this.checkedListBox1.SetItemCheckState(0, CheckState.Unchecked);
+            this.checkedListBox1.SetItemCheckState(1, CheckState.Checked);
+            this.checkedListBox1.SetItemCheckState(2, CheckState.Unchecked);
+            this.checkedListBox1.SetItemCheckState(3, CheckState.Unchecked);
 
             saveFileDialog1.Filter = "Data files(*.dat)|*.dat|Text files(*.txt)|*.txt|All files(*.*)|*.*";
             saveFileDialog1.DefaultExt = "*.dat";
             saveFileDialog1.AddExtension = true;
 
+            curveOne = curveThree = curveFour = false;
             ReadDataTimeAsync();
         }
 
@@ -186,14 +190,38 @@ namespace ServoApp
 
             //////// Алгоритм для инверсии кривых от датчика освещенности ///////////////
 
+            yIStrih[0] = y1; yIStrih[2] = y3;
             yIStrih[1] = y2; yIStrih[3] = y4;
+            y1 = Math.Abs(yNull[0] + (yI[0] - yIStrih[0]));
+            y3 = Math.Abs(yNull[2] + (yI[2] - yIStrih[2]));
             y2 = Math.Abs(yNull[1] + (yI[1] - yIStrih[1]));
             y4 = Math.Abs(yNull[3] + (yI[3] - yIStrih[3]));
+            yNull[0] = y1; yNull[2] = y3;
             yNull[1] = y2; yNull[3] = y4;
+            yI[0] = yIStrih[0]; yI[2] = yIStrih[2];
             yI[1] = yIStrih[1]; yI[3] = yIStrih[3];
+
 
             /////////////////////////////////////////////////////////////////////////////
 
+            if (trigerLess)
+            {
+                y1 = (yLessBufer[0] > y1) ? yLessBufer[0] : y1;
+                //y2 = (yLessBufer[1] > y2) ? yLessBufer[1] : y2;
+                y3 = (yLessBufer[2] > y3) ? yLessBufer[2] : y3;
+                //y4 = (yLessBufer[3] > y4) ? yLessBufer[3] : y4;
+                yLessBufer[0] = y1;
+                yLessBufer[2] = y3;
+                //yLessBufer[1] = y2;
+                //yLessBufer[3] = y4;
+            }
+            else
+            {
+                yLessBufer[0] = y1;
+                yLessBufer[2] = y3;
+                //yLessBufer[1] = y2;
+                //yLessBufer[3] = y4;
+            }
             _data.Add(x, y1);
             _data.Add(x, y2);
             _data.Add(x, y3);
@@ -461,6 +489,36 @@ namespace ServoApp
             this.numericUpDown1.Value = numericUpDown.Value - (decimal)differenceTime;
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            trigerButton2 = false;
+            global = 0;
+            triger = false;
+            trigerLess = true;
+            double trackNumber = 1;
+            serialPort.WriteLine(trackNumber.ToString());
+            serialPort.DiscardInBuffer();
+            serialPort.DiscardOutBuffer();
+            this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
+            this.label8.Text = "count = " + countTime;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            trigerButton2 = false;
+            global = 90;
+            triger = false;
+            trigerLess = false;
+            double trackNumber = 91;
+            serialPort.WriteLine(trackNumber.ToString());
+            serialPort.DiscardInBuffer();
+            serialPort.DiscardOutBuffer();
+            this.label7.Text = "all time = " + Math.Round(x, 2) + " s";
+            this.label8.Text = "count = " + countTime;
+        }
+
+        
+
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             senderCheckListSelected = sender;
@@ -575,6 +633,7 @@ namespace ServoApp
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
+            trigerLess = false;
             timeStart = DateTime.Now.Ticks;
             ++countTime;
             this.button2.Enabled = true;
@@ -605,17 +664,16 @@ namespace ServoApp
         private async void button1_Click(object sender, EventArgs e)
         {
             ++countTime;
+            trigerButton2 = true;
             if (trigerStartApp)
             {
                 timer.Tick += Timer_Tick;
                 timer.Start();
-                trigerButton2 = true;
                 trigerStartApp = false;
             }
             if (!timer.Enabled)
             {
                 timer.Start();
-                trigerButton2 = true;
             }
             this.trackBar1.Enabled = false;
             this.button1.Enabled = false;
@@ -770,6 +828,7 @@ namespace ServoApp
         {
             await Task.Run(() => // Класс-объект Task ставит в очередь заданную работу для запуска в пуле потоков и возвращает объект типа Task<TResult>
             {
+                trigerLess = false;
                 Thread.Sleep((int)Convert.ToDouble(textBox4.Text));
             });
         }
@@ -777,6 +836,7 @@ namespace ServoApp
         {
             await Task.Run(() => // Класс-объект Task ставит в очередь заданную работу для запуска в пуле потоков и возвращает объект типа Task<TResult>
             {
+                trigerLess = true;
                 Thread.Sleep((int)Convert.ToDouble(textBox3.Text));
             });
         }
